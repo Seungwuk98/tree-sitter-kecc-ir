@@ -1,0 +1,203 @@
+==================
+switch
+==================
+
+fun i32 @main () {
+init:
+  bid: b0
+  allocations: 
+
+
+block b0:
+  switch 1:i32 default b4() [
+    0:i32 b2()
+    1:i32 b3()
+  ]
+
+block b1:
+  %b1:p0:i32:b
+  %b1:i0:u1 = cmp eq %b1:p0:i32 2:i32
+  %b1:i1:i32 = typecast %b1:i0:u1 to i32
+  ret %b1:i1:i32
+
+block b2:
+  %b2:i0:i32 = add 0:i32 1:i32
+  j b1(%b2:i0:i32)
+
+block b3:
+  %b3:i0:i32 = add 0:i32 2:i32
+  j b1(%b3:i0:i32)
+
+block b4:
+  %b4:i0:i32 = add 0:i32 3:i32
+  j b1(%b4:i0:i32)
+}
+
+---
+
+(source_file
+  (function_definition
+    (function_signature
+      (type
+        (sigined_integer_type))
+      (at_identifier))
+    (function_body
+      (init_block
+        (init_block_id
+          (block_id))
+        (init_allocations))
+      (block
+        (block_id)
+        (exit
+          (switch_branch
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))
+            (block_id)
+            (switch_body
+              (switch_case
+                (operand
+                  (constant_operand
+                    (constant
+                      (number))
+                    (type
+                      (sigined_integer_type))))
+                (block_id))
+              (switch_case
+                (operand
+                  (constant_operand
+                    (constant
+                      (number))
+                    (type
+                      (sigined_integer_type))))
+                (block_id))))))
+      (block
+        (block_id)
+        (phi_node
+          (phi_id)
+          (type
+            (sigined_integer_type))
+          (identifier))
+        (instruction
+          (instruction_id)
+          (type
+            (unsigned_integer_type))
+          (cmp_op
+            (cmp_operator)
+            (operand
+              (register_operand
+                (phi_id)
+                (type
+                  (sigined_integer_type))))
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))))
+        (instruction
+          (instruction_id)
+          (type
+            (sigined_integer_type))
+          (typecast
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (unsigned_integer_type))))
+            (type
+              (sigined_integer_type))))
+        (exit
+          (return
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (sigined_integer_type)))))))
+      (block
+        (block_id)
+        (instruction
+          (instruction_id)
+          (type
+            (sigined_integer_type))
+          (arith_op
+            (arith_operator)
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))))
+        (exit
+          (jump
+            (block_id)
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (sigined_integer_type)))))))
+      (block
+        (block_id)
+        (instruction
+          (instruction_id)
+          (type
+            (sigined_integer_type))
+          (arith_op
+            (arith_operator)
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))))
+        (exit
+          (jump
+            (block_id)
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (sigined_integer_type)))))))
+      (block
+        (block_id)
+        (instruction
+          (instruction_id)
+          (type
+            (sigined_integer_type))
+          (arith_op
+            (arith_operator)
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))))
+        (exit
+          (jump
+            (block_id)
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (sigined_integer_type))))))))))

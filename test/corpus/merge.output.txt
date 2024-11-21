@@ -1,0 +1,54 @@
+==================
+merge output
+==================
+
+fun i32 @foo () {
+init:
+  bid: b0
+  allocations: 
+
+block b0:
+  %b0:i0:i32 = add 42:i32 37:i32
+  ret %b0:i0:i32
+}
+
+---
+
+(source_file
+  (function_definition
+    (function_signature
+      (type
+        (sigined_integer_type))
+      (at_identifier))
+    (function_body
+      (init_block
+        (init_block_id
+          (block_id))
+        (init_allocations))
+      (block
+        (block_id)
+        (instruction
+          (instruction_id)
+          (type
+            (sigined_integer_type))
+          (arith_op
+            (arith_operator)
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))))
+        (exit
+          (return
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (sigined_integer_type))))))))))

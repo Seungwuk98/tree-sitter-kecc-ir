@@ -1,0 +1,78 @@
+==================
+return void
+==================
+
+fun unit @foo () {
+init:
+  bid: b0
+  allocations: 
+
+
+block b0:
+  ret unit:unit
+}
+
+fun i32 @main () {
+init:
+  bid: b0
+  allocations: 
+
+
+block b0:
+  %b0:i0:unit = call @foo:[ret:unit params:()]*()
+  ret 1:i32
+}
+
+---
+
+(source_file
+  (function_definition
+    (function_signature
+      (type)
+      (at_identifier))
+    (function_body
+      (init_block
+        (init_block_id
+          (block_id))
+        (init_allocations))
+      (block
+        (block_id)
+        (exit
+          (return
+            (operand
+              (constant_operand
+                (constant)
+                (type))))))))
+  (function_definition
+    (function_signature
+      (type
+        (sigined_integer_type))
+      (at_identifier))
+    (function_body
+      (init_block
+        (init_block_id
+          (block_id))
+        (init_allocations))
+      (block
+        (block_id)
+        (instruction
+          (instruction_id)
+          (type)
+          (call
+            (operand
+              (constant_operand
+                (constant
+                  (at_identifier))
+                (type
+                  (pointer_type
+                    (type
+                      (function_type
+                        (type)))))))))
+        (exit
+          (return
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))))))))

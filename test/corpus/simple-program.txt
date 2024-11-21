@@ -1,0 +1,109 @@
+==================
+simple program 1
+==================
+
+fun i32 @main () {
+init:
+  bid: b0
+  allocations:
+
+block b0:
+  j b1()
+
+block b1:
+  ret 0:i32
+}
+
+---
+
+(source_file
+  (function_definition
+    (function_signature
+      (type
+        (sigined_integer_type))
+      (at_identifier))
+    (function_body
+      (init_block
+        (init_block_id
+          (block_id))
+        (init_allocations))
+      (block
+        (block_id)
+        (exit
+          (jump
+            (block_id))))
+      (block
+        (block_id)
+        (exit
+          (return
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))))))))
+
+==================
+simple program 2
+==================
+
+fun i32 @main () {
+init:
+  bid: b0
+  allocations:
+
+block b0:
+  j b1()
+
+block b1:
+  %b1:i0:i32 = add 1:i32 2:i32
+  ret 0:i32
+}
+
+---
+
+(source_file
+  (function_definition
+    (function_signature
+      (type
+        (sigined_integer_type))
+      (at_identifier))
+    (function_body
+      (init_block
+        (init_block_id
+          (block_id))
+        (init_allocations))
+      (block
+        (block_id)
+        (exit
+          (jump
+            (block_id))))
+      (block
+        (block_id)
+        (instruction
+          (instruction_id)
+          (type
+            (sigined_integer_type))
+          (arith_op
+            (arith_operator)
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))))
+        (exit
+          (return
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))))))))
+

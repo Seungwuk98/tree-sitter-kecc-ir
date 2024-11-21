@@ -1,0 +1,239 @@
+==================
+sizeof2
+==================
+
+fun i32 @main () {
+init:
+  bid: b0
+  allocations: 
+
+
+block b0:
+  %b0:i0:u64 = typecast 1:i32 to u64
+  %b0:i1:u1 = cmp eq 1:u64 %b0:i0:u64
+  br %b0:i1:u1, b4(), b5()
+
+block b1:
+  %b1:i0:u64 = typecast 80:i32 to u64
+  %b1:i1:u1 = cmp eq 80:u64 %b1:i0:u64
+  j b3(%b1:i1:u1)
+
+block b2:
+  j b3(0:u1)
+
+block b3:
+  %b3:p0:u1:t1
+  %b3:i0:i32 = typecast %b3:p0:u1 to i32
+  ret %b3:i0:i32
+
+block b4:
+  %b4:i0:u64 = typecast 4:i32 to u64
+  %b4:i1:u1 = cmp eq 4:u64 %b4:i0:u64
+  j b6(%b4:i1:u1)
+
+block b5:
+  j b6(0:u1)
+
+block b6:
+  %b6:p0:u1:t0
+  br %b6:p0:u1, b1(), b2()
+}
+
+---
+
+(source_file
+  (function_definition
+    (function_signature
+      (type
+        (sigined_integer_type))
+      (at_identifier))
+    (function_body
+      (init_block
+        (init_block_id
+          (block_id))
+        (init_allocations))
+      (block
+        (block_id)
+        (instruction
+          (instruction_id)
+          (type
+            (unsigned_integer_type))
+          (typecast
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))
+            (type
+              (unsigned_integer_type))))
+        (instruction
+          (instruction_id)
+          (type
+            (unsigned_integer_type))
+          (cmp_op
+            (cmp_operator)
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (unsigned_integer_type))))
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (unsigned_integer_type))))))
+        (exit
+          (conditional_branch
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (unsigned_integer_type))))
+            (block_id)
+            (block_id))))
+      (block
+        (block_id)
+        (instruction
+          (instruction_id)
+          (type
+            (unsigned_integer_type))
+          (typecast
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))
+            (type
+              (unsigned_integer_type))))
+        (instruction
+          (instruction_id)
+          (type
+            (unsigned_integer_type))
+          (cmp_op
+            (cmp_operator)
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (unsigned_integer_type))))
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (unsigned_integer_type))))))
+        (exit
+          (jump
+            (block_id)
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (unsigned_integer_type)))))))
+      (block
+        (block_id)
+        (exit
+          (jump
+            (block_id)
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (unsigned_integer_type)))))))
+      (block
+        (block_id)
+        (phi_node
+          (phi_id)
+          (type
+            (unsigned_integer_type))
+          (identifier))
+        (instruction
+          (instruction_id)
+          (type
+            (sigined_integer_type))
+          (typecast
+            (operand
+              (register_operand
+                (phi_id)
+                (type
+                  (unsigned_integer_type))))
+            (type
+              (sigined_integer_type))))
+        (exit
+          (return
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (sigined_integer_type)))))))
+      (block
+        (block_id)
+        (instruction
+          (instruction_id)
+          (type
+            (unsigned_integer_type))
+          (typecast
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (sigined_integer_type))))
+            (type
+              (unsigned_integer_type))))
+        (instruction
+          (instruction_id)
+          (type
+            (unsigned_integer_type))
+          (cmp_op
+            (cmp_operator)
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (unsigned_integer_type))))
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (unsigned_integer_type))))))
+        (exit
+          (jump
+            (block_id)
+            (operand
+              (register_operand
+                (instruction_id)
+                (type
+                  (unsigned_integer_type)))))))
+      (block
+        (block_id)
+        (exit
+          (jump
+            (block_id)
+            (operand
+              (constant_operand
+                (constant
+                  (number))
+                (type
+                  (unsigned_integer_type)))))))
+      (block
+        (block_id)
+        (phi_node
+          (phi_id)
+          (type
+            (unsigned_integer_type))
+          (identifier))
+        (exit
+          (conditional_branch
+            (operand
+              (register_operand
+                (phi_id)
+                (type
+                  (unsigned_integer_type))))
+            (block_id)
+            (block_id)))))))

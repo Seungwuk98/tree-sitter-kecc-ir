@@ -1,0 +1,41 @@
+==================
+reach output
+==================
+
+
+fun i32 @foo () {
+init:
+  bid: b0
+  allocations: 
+
+block b0:
+  j b1()
+
+block b1:
+  j b0()
+}
+
+---
+
+(source_file
+  (function_definition
+    (function_signature
+      (type
+        (sigined_integer_type))
+      (at_identifier))
+    (function_body
+      (init_block
+        (init_block_id
+          (block_id))
+        (init_allocations))
+      (block
+        (block_id)
+        (exit
+          (jump
+            (block_id))))
+      (block
+        (block_id)
+        (exit
+          (jump
+            (block_id)))))))
+

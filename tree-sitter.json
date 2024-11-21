@@ -1,0 +1,35 @@
+{
+  "grammars": [
+    {
+      "name": "kecc_ir",
+      "camelcase": "KeccIr",
+      "scope": "source.kecc_ir",
+      "file-types": [
+        ".ir"
+      ],
+      "injection-regex": "^kecc_ir$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "kecc ir parser",
+    "authors": [
+      {
+        "name": "SeungWuk Eun",
+        "email": "seungwuk98@snu.ac.kr"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/Seungwuk98/tree-sitter-kecc-ir"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
