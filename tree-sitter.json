@@ -5,9 +5,10 @@
       "camelcase": "KeccIr",
       "scope": "source.kecc_ir",
       "file-types": [
-        ".ir"
+        "ir"
       ],
-      "injection-regex": "^kecc_ir$"
+      "injection-regex": "^kecc_ir$",
+      "highlights": "queries/highlights.scm"
     }
   ],
   "metadata": {

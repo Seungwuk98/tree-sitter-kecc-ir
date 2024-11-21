@@ -1448,8 +1448,8 @@
           "name": "return"
         },
         {
-          "type": "SYMBOL",
-          "name": "unreachable"
+          "type": "STRING",
+          "value": "unreachable"
         }
       ]
     },
@@ -1582,10 +1582,6 @@
           "name": "operand"
         }
       ]
-    },
-    "unreachable": {
-      "type": "STRING",
-      "value": "unreachable"
     },
     "switch_body": {
       "type": "SEQ",

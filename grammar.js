@@ -303,7 +303,7 @@ module.exports = grammar({
       $.conditional_branch,
       $.switch_branch,
       $.return,
-      $.unreachable,
+      'unreachable',
     ),
 
     jump: $ => seq(
@@ -335,7 +335,6 @@ module.exports = grammar({
       'ret', $.operand
     ),
 
-    unreachable: _ => 'unreachable',
 
     switch_body: $ => seq(
       '[',

@@ -240,7 +240,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "conditional_branch",
@@ -256,10 +256,6 @@
         },
         {
           "type": "switch_branch",
-          "named": true
-        },
-        {
-          "type": "unreachable",
           "named": true
         }
       ]
@@ -1228,7 +1224,7 @@
   },
   {
     "type": "unreachable",
-    "named": true
+    "named": false
   },
   {
     "type": "unsigned_integer_type",
