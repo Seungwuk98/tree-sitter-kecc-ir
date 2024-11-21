@@ -25,6 +25,7 @@
 (block bid: (block_id) @function)
 
 (phi_node) @variable.parameter
+(allocation) @variable.parameter
 (load "load" @function.builtin)
 (store "store" @function.builtin)
 (call "call" @function.builtin)
@@ -42,8 +43,10 @@
 
 (jump "j" @function.builtin
       (block_id) @function)
-(conditional_branch "br" @function.builtin)
+(conditional_branch "br" @function.builtin
+                    (block_id) @function)
 (switch_branch "switch" @function.builtin)
+(switch_case (block_id) @function)
 (return "ret" @function.builtin)
 
 [
