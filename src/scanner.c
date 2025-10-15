@@ -14,7 +14,7 @@ typedef struct {
   uint16_t dedent_indent;
 } Scanner;
 
-static void print_scanner(Scanner *scanner) {
+void print_scanner(Scanner *scanner) {
   printf("indents: ");
   for (unsigned i = 0; i < scanner->indents.size; ++i) {
     printf("%d ", *array_get(&scanner->indents, i));
@@ -80,8 +80,8 @@ void tree_sitter_kecc_ir_external_scanner_destroy(void *payload) {
   ts_free(scanner);
 }
 
-static void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
-static void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
+void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
+void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
 
 bool tree_sitter_kecc_ir_external_scanner_scan(void *payload, TSLexer *lexer,
                                                const bool *valid_symbols) {
