@@ -48,6 +48,15 @@
 (switch_branch "switch" @function.builtin)
 (switch_case (block_id) @function)
 (return "ret" @function.builtin)
+(outline_constant "outline" @function.builtin)
+(load_offset "load_offset" @function.builtin)
+(store_offset "store_offset" @function.builtin)
+(inline_call "inline" @function.builtin
+             "call" @function.builtin)
+(memcpy "memcpy" @function.builtin
+        "dst" @keyword
+        "src" @keyword
+        "size" @keyword)
 
 [
   "="
@@ -80,3 +89,6 @@
 ] @punctuation.bracket
 
 
+(litSupport) @attribute
+
+(comment) @comment 

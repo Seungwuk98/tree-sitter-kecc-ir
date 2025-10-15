@@ -10,6 +10,11 @@
 module.exports = grammar({
   name: "kecc_ir",
 
+  extras: $ => [
+    $.comment,
+    /[\ \v\t\f\r]/,
+  ],
+
   externals: $ => [
     $._indent,
     $._dedent,
@@ -33,9 +38,17 @@ module.exports = grammar({
           )),
         )
       ),
-
       optional($._newline)
     ),
+
+    comment: $ => seq(
+      /\/\/+/,
+      optional($.litSupport),
+      $._comment,
+    ),
+
+    litSupport: _ => token(prec(2, /[a-zA-Z][a-zA-Z0-9_-]+:/)),
+    _comment: _ => token(prec(1, /.*/)),
 
     _program_statement: $ => choice(
       $.global_variable,
@@ -145,7 +158,7 @@ module.exports = grammar({
 
     function_signature: $ => seq(
       'fun',
-      $.type,
+      $.type, optional(seq(',', $.type)),
       field('name', $.at_identifier),
       '(',
       optional($.function_param_types),
@@ -186,7 +199,7 @@ module.exports = grammar({
 
     allocation: $ => seq(
       token(seq('%', 'l', /[0-9]+/)),
-      ':', $.type, ':', $.identifier,
+      ':', $.type, optional(seq(':', $.identifier)),
     ),
 
     block: $ => seq(
@@ -224,10 +237,19 @@ module.exports = grammar({
     ),
 
     instruction: $ => seq(
+      optional(seq($._values, '=')),
+      $._instruction_inner
+    ),
+
+    _value: $ => seq(
       token(seq('%', 'b', /[0-9]+/)),
       ':', $.instruction_id, ':', $.type,
-      optional(seq(':', $.identifier)), '=',
-      $._instruction_inner
+      optional(seq(':', $.identifier))
+    ),
+
+    _values: $ => seq(
+      $._value,
+      repeat(seq(',', $._value))
     ),
 
     _instruction_inner: $ => choice(
@@ -242,6 +264,12 @@ module.exports = grammar({
       $.cmp_op,
       $.bitwise_op,
       $.gep_op,
+      $.function_argument,
+      $.memcpy,
+      $.outline_constant,
+      $.load_offset,
+      $.store_offset,
+      $.inline_call,
     ),
 
     nop: $ => 'nop',
@@ -259,6 +287,13 @@ module.exports = grammar({
     cmp_op: $ => seq('cmp', $.cmp_operator, $.operand, $.operand),
     bitwise_op: $ => seq($.bitwise_operator, $.operand, $.operand),
     gep_op: $ => seq('getelementptr', $.operand, 'offset', $.operand),
+    function_argument: $ => seq('function', 'argument'),
+    memcpy: $ => seq('memcpy', 'dst', ':', $.operand, ',', 'src', ':', $.operand, ',', 'size', ':', $.operand),
+    outline_constant: $ => seq('outline', $.operand),
+    load_offset: $ => seq('load_offset', $.operand, $.operand, 'offset', $.number),
+    store_offset: $ => seq('store_offset', $.operand, $.operand, $.operand, 'offset', $.number),
+    inline_call: $ => seq('inline', 'call', ':', $.type, '(', optional($._call_args), ')'),
+
 
     unary_operator: $ => choice(
       'plus', 'minus', 'negate',
@@ -414,8 +449,16 @@ module.exports = grammar({
     number: $ => /[0-9]+/,
     float: $ => token(seq(
       /[0-9]+/,
-      '.',
-      /[0-9]+/,
+      optional(seq(
+        '.',
+        /[0-9]+/)),
+      optional(
+        seq(
+          choice('e', 'E'),
+          optional(choice('+', '-')),
+          /[0-9]+/
+        )
+      ),
     )),
 
     unsigned_integer_type: $ => token(seq('u', /[0-9]+/)),
@@ -424,7 +467,7 @@ module.exports = grammar({
     array_type: $ => seq('[', $.number, 'x', $.type, ']'),
     const_type: $ => prec.right(1, seq('const', $.type)),
     pointer_type: $ => prec.left(2, seq($.type, '*', optional('const'))),
-    function_type: $ => seq('[', 'ret', ':', $.type, 'params', ':', '(',
+    function_type: $ => seq('[', 'ret', ':', $.type, optional(seq(',', $.type)), 'params', ':', '(',
       optional($.function_param_types),
       ')', ']'
     ),
