@@ -13,6 +13,7 @@ module.exports = grammar({
   extras: $ => [
     $.comment,
     /[\ \v\t\f\r]/,
+    $.block_comment
   ],
 
   externals: $ => [
@@ -49,6 +50,12 @@ module.exports = grammar({
 
     litSupport: _ => token(prec(2, /[a-zA-Z][a-zA-Z0-9_-]+:/)),
     _comment: _ => token(prec(1, /.*/)),
+
+    block_comment: $ => seq(
+      '/*',
+      /[^*]*\*+([^/*][^*]*\*+)*/,
+      '/',
+    ),
 
     _program_statement: $ => choice(
       $.global_variable,

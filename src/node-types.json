@@ -120,6 +120,11 @@
     }
   },
   {
+    "type": "block_comment",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "call",
     "named": true,
     "fields": {},
@@ -1131,6 +1136,14 @@
   },
   {
     "type": "-",
+    "named": false
+  },
+  {
+    "type": "/",
+    "named": false
+  },
+  {
+    "type": "/*",
     "named": false
   },
   {

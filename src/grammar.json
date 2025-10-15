@@ -111,6 +111,23 @@
         }
       }
     },
+    "block_comment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "/*"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[^*]*\\*+([^/*][^*]*\\*+)*"
+        },
+        {
+          "type": "STRING",
+          "value": "/"
+        }
+      ]
+    },
     "_program_statement": {
       "type": "CHOICE",
       "members": [
@@ -2551,6 +2568,10 @@
     {
       "type": "PATTERN",
       "value": "[\\ \\v\\t\\f\\r]"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "block_comment"
     }
   ],
   "conflicts": [
