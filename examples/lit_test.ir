@@ -1,0 +1,57 @@
+// RUN: kecc-opt %s --canonicalize-struct | FileCheck %s
+
+struct S : { x: i32, y: f32, z: i32 }
+struct S2 : { x: i64, y: i64 }
+struct SS : { x: i32 }
+struct SS2 : { x: i8, y: i8, z: i8 }
+struct B : { x: i64, y: i64, z: i64 }
+struct BB : { x: [100 x i64] }
+
+fun struct S, struct B @callee_func0 () {
+// CHECK-LABEL: fun i64, i64 @callee_func0 (struct B*)
+init:
+  bid: b0
+  allocations:
+    %l0:struct S 
+    %l1:struct B
+
+block b0:
+  %b0:i0:struct S = load %l0:struct S*
+  %b0:i1:struct B = load %l1:struct B*
+  ret %b0:i0:struct S, %b0:i1:struct B
+
+}
+
+fun unit @callee_func1 (struct S, struct B) {
+init:
+  bid: b0
+  allocations:
+    %l0:struct S 
+    %l1:struct B
+
+block b0:
+  %b0:p0:struct S 
+  %b0:p1:struct B 
+  %b0:i0:unit = store %b0:p0:struct S %l0:struct S* 
+  %b0:i1:unit = store %b0:p1:struct B %l1:struct B*
+  ret   
+}
+
+fun unit @caller_func0 (struct S, struct B) {
+init:
+  bid: b0
+  allocations:
+    %l0:struct S 
+    %l1:struct B
+
+block b0:
+  %b0:p0:struct S 
+  %b0:p1:struct B 
+
+  %b0:i0:unit = store %b0:p0:struct S %l0:struct S* 
+  %b0:i1:unit = store %b0:p1:struct B %l1:struct B*
+  %b0:i2:struct S, %b0:i3:struct B = call @callee_func0:[ret: struct S, struct B params:()]*()
+  %b0:i4:unit = call @callee_func1:[ret:unit params:(struct S, struct B)]*(%b0:i2:struct S, %b0:i3:struct B)
+  ret
+}
+

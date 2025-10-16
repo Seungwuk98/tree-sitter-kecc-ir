@@ -360,7 +360,7 @@ module.exports = grammar({
     ),
 
     return: $ => seq(
-      'ret', $.operand
+      'ret', optional(seq($.operand, repeat(seq(',', $.operand))))
     ),
 
 
