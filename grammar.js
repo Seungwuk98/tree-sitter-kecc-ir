@@ -16,22 +16,18 @@ module.exports = grammar({
     $.block_comment
   ],
 
-  externals: $ => [
-    $._indent,
-    $._dedent,
-    $._newline
-  ],
-
   conflicts: $ => [
     [$._phi_nodes],
     [$._instructions],
+    [$.init_allocations],
+    [$._switch_cases]
   ],
 
   rules: {
     source_file: $ => seq(
-      optional($._newline),
       optional(
         seq(
+          optional($._newline),
           $._program_statement,
           repeat(seq(
             $._newline,
@@ -47,6 +43,8 @@ module.exports = grammar({
       optional($.litSupport),
       $._comment,
     ),
+
+    _newline: $ => repeat1('\n'),
 
     litSupport: _ => token(prec(2, /[a-zA-Z][a-zA-Z0-9_-]+:/)),
     _comment: _ => token(prec(1, /.*/)),
@@ -159,7 +157,8 @@ module.exports = grammar({
       '{',
       $._newline,
       field('init', $.init_block),
-      field('blocks', repeat1($.block)),
+      field('blocks', repeat1(seq($._newline, $.block))),
+      $._newline,
       '}',
     ),
 
@@ -174,11 +173,10 @@ module.exports = grammar({
 
     init_block: $ => seq(
       'init', ':',
-      $._indent,
+      $._newline,
       $.init_block_id,
       $._newline,
       $.init_allocations,
-      $._dedent,
     ),
 
     init_block_id: $ => seq(
@@ -187,21 +185,10 @@ module.exports = grammar({
 
     init_allocations: $ => seq(
       'allocations', ':',
-      optional(
-        seq(
-          $._indent,
-          $._allocations,
-          $._dedent
-        )
-      ),
-    ),
-
-    _allocations: $ => seq(
-      $.allocation,
       repeat(seq(
         $._newline,
         $.allocation
-      )),
+      ))
     ),
 
     allocation: $ => seq(
@@ -211,11 +198,10 @@ module.exports = grammar({
 
     block: $ => seq(
       'block', field('bid', $.block_id), ':',
-      $._indent,
-      optional(seq($._phi_nodes, $._newline)),
-      optional(seq($._instructions, $._newline)),
+      optional(seq($._newline, $._phi_nodes)),
+      optional(seq($._newline, $._instructions)),
+      $._newline,
       $.exit,
-      $._dedent
     ),
 
     _phi_nodes: $ => seq(
@@ -380,9 +366,9 @@ module.exports = grammar({
 
     switch_body: $ => seq(
       '[',
-      $._indent,
+      $._newline,
       $._switch_cases,
-      $._dedent,
+      $._newline,
       ']',
     ),
 

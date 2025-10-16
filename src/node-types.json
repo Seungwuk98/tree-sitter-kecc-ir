@@ -295,6 +295,10 @@
         "required": true,
         "types": [
           {
+            "type": "\n",
+            "named": false
+          },
+          {
             "type": "block",
             "named": true
           }
@@ -1109,6 +1113,10 @@
     "type": "unary_operator",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "\n",
+    "named": false
   },
   {
     "type": "%anon",
